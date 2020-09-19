@@ -1,0 +1,68 @@
+version: '2'
+services:
+  mongodb:
+    image: mongo:3.6.18
+    container_name: dev-mongodb
+    restart: always
+    volumes:
+      - /opt/docker-data/dev/shared/:/opt/shared
+      - /opt/docker-data/dev/mongodb/data/db:/data/db
+      - /opt/docker-data/dev/mongodb/logs:/var/log
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "test"
+      MONGO_INITDB_ROOT_PASSWORD: "test"
+      MONGO_INITDB_DATABASE: "admin"
+
+
+  camel-springboot-rest:
+    container_name: camel-springboot-rest
+    image: camel-springboot-rest
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - /opt/docker-data/dev/shared/:/opt/shared
+      - /opt/docker-data/dev/camel-rest/logs:/var/log
+    links:
+      - mongodb
+#      - logstash
+
+
+#  elasticsearch:
+#    container_name: elasticsearch
+#    image: elasticsearch:7.6.2
+#    ports:
+#      - '9200:9200'
+#      - '9300:9300'
+#    environment:
+#      - node.name=es01
+#      - cluster.initial_master_nodes=es01
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#
+#  kibana:
+#    container_name: kibana
+#    image: kibana:7.6.2
+#    ports:
+#      - '5601:5601'
+#    depends_on:
+#      - elasticsearch
+#
+#
+#  logstash:
+#    container_name: logstash
+#    image: logstash:7.6.2
+#    ports:
+#      - '5000:5000'
+#    volumes:
+#      - $PWD/elk-config:/elk-config
+#    command: logstash -f /elk-config/logstash.config
+#    environment:
+#      ELASTICSEARCH_HOST: elasticsearch
+#      ELASTICSEARCH_PORT: 9200
+#    depends_on:
+#      - elasticsearch

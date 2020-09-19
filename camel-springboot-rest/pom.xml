@@ -20,13 +20,9 @@
         <spring.boot-version>${spring-boot-version}</spring.boot-version>
         <jackson.swagger.version>2.9.10</jackson.swagger.version>
 
-        <!-- for symbolicName in OSGi examples we only want the artifactId, eg camel-example-sql -->
-        <!-- as having org.apache.camel as prefix is not needed and makes the name very long -->
-        <camel.osgi.symbolic.name>${project.artifactId}</camel.osgi.symbolic.name>
         <camel-version>3.5.0</camel-version>
         <skip.starting.camel.context>false</skip.starting.camel.context>
         <javax.servlet.api.version>4.0.1</javax.servlet.api.version>
-        <camel.osgi.export.pkg/>
         <tomcat-version>9.0.31</tomcat-version>
 
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
@@ -55,6 +51,7 @@
             <version>1.18.12</version>
             <scope>provided</scope>
         </dependency>
+
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -177,7 +174,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
 
 
             <dependency>
@@ -358,6 +354,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>

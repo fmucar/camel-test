@@ -51,21 +51,6 @@ public class CamelRouteBuilder extends RouteBuilder {
 
 
         //consume rest endpoint and make it available as rest endpoint
-
-        @Data
-        class Deneme {
-            private int code;
-            private List<Country> result;
-            private List extra;
-
-            @Data
-            class Country {
-                private String name;
-                private String code;
-                private String states;
-            }
-        }
-
         from("rest://get:countries")
 //                .to("json-validator:be/country-schema.json")
                 .to("https://api.printful.com/countries?bridgeEndpoint=true");

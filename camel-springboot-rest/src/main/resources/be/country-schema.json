@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$ref": "#/definitions/Welcome9",
+  "definitions": {
+    "Welcome9": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "integer"
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Result"
+          }
+        },
+        "extra": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "code",
+        "extra",
+        "result"
+      ],
+      "title": "Welcome9"
+    },
+    "Result": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "states": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/State"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "code",
+        "name",
+        "states"
+      ],
+      "title": "Result"
+    },
+    "State": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "name"
+      ],
+      "title": "State"
+    }
+  }
+}

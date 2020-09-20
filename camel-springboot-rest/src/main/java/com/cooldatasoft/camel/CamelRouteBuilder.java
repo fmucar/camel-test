@@ -2,14 +2,16 @@ package com.cooldatasoft.camel;
 
 import com.cooldatasoft.data.Book;
 import com.cooldatasoft.entity.BookEntity;
+import lombok.Data;
 import org.apache.camel.Exchange;
-import org.apache.camel.Message;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 import static org.apache.camel.model.rest.RestParamType.body;
 import static org.apache.camel.model.rest.RestParamType.path;
@@ -46,6 +48,28 @@ public class CamelRouteBuilder extends RouteBuilder {
                 .setBody(simple(" { \"messageId\": \"${id}\", \"timestamp\": \"${date:now:dd/MMM/yyyy:HH:mm:ss Z}\", \"description\": \"Report this messageId for escalation\" }"))
                 .log("messageId: ${id}, timestamp: \"${date:now:dd/MMM/yyyy:HH:mm:ss Z}\", message: \"${exception.message}\"\n ${exception.stacktrace}")
                 .end();
+
+
+        //consume rest endpoint and make it available as rest endpoint
+
+        @Data
+        class Deneme {
+            private int code;
+            private List<Country> result;
+            private List extra;
+
+            @Data
+            class Country {
+                private String name;
+                private String code;
+                private String states;
+            }
+        }
+
+        from("rest://get:countries")
+//                .to("json-validator:be/country-schema.json")
+                .to("https://api.printful.com/countries?bridgeEndpoint=true");
+
 
 
         rest("/books").consumes("application/json").produces("application/json")
